@@ -1,8 +1,9 @@
 # Rustomics
 
 ## Tools for bioinformatics built in awesome Rust!
+This is still in early development but more tools will be added bit by bit.
 
-## Currentlt available:
+## Currently available:
 - BED file chromosome renaming tool.
 
 ## Build instructions:
