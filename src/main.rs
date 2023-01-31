@@ -13,10 +13,13 @@ fn main() {
         .about("Tools for bioinformatics built in awesome Rust!")
         .arg(arg!(--bedfile <VALUE>).required(true))
         .arg(arg!(--mapfile <VALUE>).required(true))
+        .arg(arg!(--delimiter <VALUE>).default_value("space"))
         .get_matches();
 
     let bed_file_name: &String = matches.get_one::<String>("bedfile").expect("required");
-    let map_file_name: &String = matches.get_one::<String>("mapfile").expect("required");  
+    let map_file_name: &String = matches.get_one::<String>("mapfile").expect("required");
+
+    let delimiter_type: &String = matches.get_one::<String>("delimiter").expect("required");
 
     // Print out file names to screen
     println!("BED file loaded: {:?}", bed_file_name);
@@ -38,9 +41,17 @@ fn main() {
     let map_file: File = File::open(map_file_path).unwrap();
     let map_reader: BufReader<File> = BufReader::new(map_file);
     for map_line in map_reader.lines(){
-        let map_lines_split:Vec<String> = Vec::from_iter(map_line.unwrap().split("\t").map(String::from));
-        chromosome_map.insert(map_lines_split[0].to_string(), map_lines_split[1].to_string());
-        println!("{},{}", map_lines_split[0].to_string(), map_lines_split[1].to_string());
+        if delimiter_type == "space"{
+            let map_lines_split:Vec<String> = Vec::from_iter(map_line.unwrap().split_whitespace().map(String::from));
+            chromosome_map.insert(map_lines_split[0].to_string(), map_lines_split[1].to_string());
+            println!("{},{}", map_lines_split[0].to_string(), map_lines_split[1].to_string());
+        }
+        else if delimiter_type == "tab"{
+            let map_lines_split:Vec<String> = Vec::from_iter(map_line.unwrap().split("\t").map(String::from));
+            chromosome_map.insert(map_lines_split[0].to_string(), map_lines_split[1].to_string());
+            println!("{},{}", map_lines_split[0].to_string(), map_lines_split[1].to_string());
+        }
+    
     }
 
     let mut new_bed_file_vec: Vec<String> = Vec::new();
