@@ -1,10 +1,8 @@
 # Rustomics
 
-## Tools for bioinformatics built in awesome Rust!
-This is still in early development but more tools will be added bit by bit.
-
 ## Currently available:
 - BED file chromosome renaming tool.
+    - Mapping chromosome names from GTF/GFF3 annotations to more readable naming (i.e. Chromosome 1, 2, 3, X, Y, etc...).
 
 ## Build instructions:
 - Once Rust and Cargo have been installed and this repo has been cloned, run:
