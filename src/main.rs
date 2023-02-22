@@ -60,13 +60,13 @@ fn main() {
     let bed_reader: BufReader<File> = BufReader::new(bed_file);
     for bed_lines in bed_reader.lines() {
         let bed_line: String = bed_lines.unwrap();
-        let chromosome_identifer: &str = bed_line.split_whitespace().next().unwrap();
-        let new_chromosome_identifier: &str = chromosome_map.get(chromosome_identifer).unwrap().as_str();
-        let new_bed_line: String = bed_line.replace(chromosome_identifer, new_chromosome_identifier);
+        let chromosome_identifier: &str = bed_line.split_whitespace().next().unwrap();
+        let new_chromosome_identifier: &str = chromosome_map.get(chromosome_identifier).unwrap().as_str();
+        let new_bed_line: String = bed_line.replace(chromosome_identifier, new_chromosome_identifier);
         new_bed_file_vec.push(new_bed_line);
     }
 
-    let output_bed_file = format!("{}{}", "renamed_", bed_file_name);
+    let output_bed_file: String = format!("{}{}", "renamed_", bed_file_name);
     fs::write(output_bed_file, new_bed_file_vec.join("\n")).expect("");
 
 }
